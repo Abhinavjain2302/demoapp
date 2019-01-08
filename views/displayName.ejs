@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<title>Form Page</title>
+</head>
+<body>
+<center>
+<table border="1" >
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Delete</th>
+			<th>Update</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%for(var i=0;i<Name.length;i++){%>
+		<tr>
+			<td><%=Name[i]%></td>
+			<td>
+				<form action="deleteName" method="post">
+					<input type="text" name="index" value="<%=i%>" style="display:none">
+				    <button type="submit">Delete</button>
+			    </form>
+			 </td>
+			 <td>
+			 	
+			    <form action="updateName">
+			    	<input type="text" name="index" value="<%=i%>" style="display:none">
+			    	<button type="submit">Update</button>
+			    </form>
+			
+		   </td>
+		</tr>
+		<%}%>
+	</tbody>
+</table>
+</center>
+</body>
+
+
+</html>
