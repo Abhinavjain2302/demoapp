@@ -1,22 +1,15 @@
 <html>
 
 <head>
-<title>Homepage</title>
+<title>Form Page</title>
 </head>
 <body>
 <center>
-	<table border="1" style="border-collapse:collapse; padding:10px; height:100px; width:100px;text-align:center "> 
-		
-		<tbody>
-			<tr>
-				<td><a href="name">Enter Name</a></td>
-			</tr>
-			<tr>
-				<td><a href="age">Enter Age</a></td>
-			</tr>
-		</tbody>
-	</table>
-
+<form method="post" action="/insert" >
+	Name <input type="text" name="name"> <br>
+	Age <input type="text" name="age"> <br>
+	<button type="submit">Submit</button>
+</form>
 
 </center>
 </body>

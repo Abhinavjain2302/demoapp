@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<title>View Page</title>
+
+</head>
+<body>
+<center>
+<table border="1" >
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Delete</th>
+			<th>Update</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%for(var i=0;i<Person.length;i++){%>
+		<tr>
+			<td><%=Person[i].name%></td>
+			<td><%=Person[i].age%></td>
+			<td>
+				<form action="/delete/<%=i%>">
+					<!-- <input type="text" name="index" value="<%=i%>" style="display:none"> -->
+				    <button id="button1" type="submit">Delete</button>
+			    </form>
+			 </td>
+			 <td>
+			 	<form action="/search">
+			    	<button type="submit">Update</button>
+			    </form>
+			
+		      </td>
+		</tr>
+		<%}%>
+	</tbody>
+</table>
+</center>
+</body>
+
+
+</html>

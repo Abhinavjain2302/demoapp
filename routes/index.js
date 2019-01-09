@@ -1,64 +1,93 @@
 var express = require('express');
 var router = express.Router();
-var Name = [];
-var Age = [];
-var i;
+var Person = [];
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index');
 });
 
-router.get('/name', function (req, res, next) {
-  res.render('name');
+
+router.get('/search', function (req, res, next) {
+  res.render('search');
 });
 
-router.get('/age', function (req, res, next) {
-  res.render('age');
-});
-
-router.post('/insertName', function (req, res, next) {
-  var Insert = require('../api-modules/insert.js');
-  Insert.insertName(req, res, next, Name)
+router.post('/insert', function (req, res, next) {
+  var name = req.body.name;
+  var age = req.body.age;
+  if ((name.length <= 0) || (age.length <= 0)) {
+    res.send("Please enter a valid Name and Age");
+  }
+  else if ((name.trim().length === 0) || (age.trim().length === 0)) {
+    res.send("Please enter a valid Name and Age");
+  } else {
+    var obj = {};
+    obj.name = name;
+    obj.age = age;
+    Person.push(obj);
+    console.log(obj);
+    console.log(Person);
+    res.render('display', { Person: Person })
+  }
 })
 
 
-router.post('/insertAge', function (req, res, next) {
-  var Insert = require('../api-modules/insert.js');
-  Insert.insertAge(req, res, next, Name)
+router.get('/delete/:id', function (req, res, next) {
+  var index = req.params.id;
+  console.log(index);
+  Person.splice(index, 1);
+  console.log(Person);
+  res.render('display.ejs', { Person: Person })
 })
 
-router.post('/deleteName', function (req, res, next) {
-  var Delete = require('../api-modules/delete.js');
-  Delete.deleteName(req, res, next, Name)
-})
 
-router.post('/deleteAge', function (req, res, next) {
-  var Delete = require('../api-modules/delete.js');
-  Delete.deleteName(req, res, next, Age)
-})
-
-router.get('/updateName', function (req, res, next) {
-  i = req.query.index;
-  console.log(i);
-  res.render('updateName');
-
+router.post('/search', function (req, res, next) {
+  var name = req.body.name;
+  var age = req.body.age;
+  if ((name.length <= 0) || (age.length <= 0)) {
+    res.send("Please enter a valid Name and Age");
+  }
+  else if ((name.trim().length === 0) || (age.trim().length === 0)) {
+    res.send("Please enter a valid Name and Age");
+  } else {
+    console.log(req.body);
+    Person.forEach(function (obj) {
+      if ((obj.name == name) && (obj.age == age)) {
+        res.render('update', { object: obj });
+      }
+      else {
+        res.send('Please enter your correct details');
+      }
+    })
+  }
 });
 
-router.get('/updateAge', function (req, res, next) {
-  i = req.query.index;
-  console.log(i);
-  res.render('updateAge');
+
+router.post('/update', function (req, res, next) {
+  var name = req.body.name;
+  var age = req.body.age;
+  var object = req.body.obj;
+  console.log(object);
+  if ((name.length <= 0) || (age.length <= 0)) {
+    res.send("Please enter a valid Name and Age");
+  }
+  else if ((name.trim().length === 0) || (age.trim().length === 0)) {
+    res.send("Please enter a valid Name and Age");
+  } else {
+
+    Person.forEach(function (obj) {
+      if (obj == object) {
+        obj.name = name;
+        obj.age = age;
+        console.log(obj);
+      }
+    })
+    console.log(Person)
+    res.render('display.ejs', { Person: Person })
+  }
 });
 
-router.post('/updateName', function (req, res, next) {
-  var Update = require('../api-modules/update.js');
-  Update.updateName(req, res, next, Name, i)
-});
 
-router.post('/updateAge', function (req, res, next) {
-  var Update = require('../api-modules/update.js');
-  Update.updateAge(req, res, next, Age, i)
-});
 
 module.exports = router;
